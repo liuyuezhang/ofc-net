@@ -1,6 +1,7 @@
 *.pdf
 *.png
 *.pth
+res*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
