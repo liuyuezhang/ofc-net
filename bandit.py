@@ -14,7 +14,7 @@ epsilon_min = 0.0
 epsilon_decay = 0.995
 lr = 0.001
 num_trials = 10000  # Number of independent trials
-conflict = False
+conflict = True
 log_interval = 1000  # Log the average reward every 1000 trials
 
 # name

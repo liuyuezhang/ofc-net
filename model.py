@@ -4,7 +4,7 @@ import torch.nn as nn
 
 # Define the MLP for action-value estimation
 class QNetwork(nn.Module):
-    def __init__(self, input_dim=17, hidden_dim=64, output_dim=2):
+    def __init__(self, input_dim=19, hidden_dim=64, output_dim=2):
         super(QNetwork, self).__init__()
         self.fc1 = nn.Linear(input_dim, hidden_dim)
         self.fc2 = nn.Linear(hidden_dim, hidden_dim)
