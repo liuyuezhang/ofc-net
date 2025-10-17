@@ -6,8 +6,8 @@ import torch.nn as nn
 class QNetwork(nn.Module):
     def __init__(self, input_dim=19, hidden_dim=64, output_dim=2):
         super(QNetwork, self).__init__()
-        self.fc1 = nn.Linear(input_dim, hidden_dim)
-        self.fc2 = nn.Linear(hidden_dim, hidden_dim)
+        self.fc1 = nn.Linear(input_dim, 64)
+        self.fc2 = nn.Linear(64, hidden_dim)
         self.fc3 = nn.Linear(hidden_dim, output_dim)
     
     # def forward(self, x):

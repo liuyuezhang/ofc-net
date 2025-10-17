@@ -6,20 +6,21 @@ import os
 
 
 # Q-learning parameters
-n = 64
+n = 1
+num_cues = 2
 coef_l1 = 0.0
 gamma = 0.99  # Discount factor (not needed in bandit, but kept for consistency)
 epsilon = 1.0
 epsilon_min = 0.0
 epsilon_decay = 0.995
 lr = 0.001
-num_trials = 10000  # Number of independent trials
+num_trials = 100000  # Number of independent trials
 conflict = True
 log_interval = 1000  # Log the average reward every 1000 trials
 
 # name
 res_dir = './res'
-name = 'bandit_conflict={}_n={}_l1={}'.format(conflict, n, coef_l1)
+name = 'bandit_cues={}_conflict={}_n={}_l1={}'.format(num_cues, conflict, n, coef_l1)
 name_dir = os.path.join(res_dir, name)
 os.makedirs(name_dir, exist_ok=True)
 
@@ -28,7 +29,7 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # Initialize environment and model
 from env import BanditEnv
-env = BanditEnv(conflict=conflict)
+env = BanditEnv(conflict=conflict, num_cues=num_cues)
 
 from model import QNetwork
 q_network = QNetwork(hidden_dim=n).to(device)  # Move model to GPU if available
@@ -60,9 +61,10 @@ for trial in range(num_trials):
 
     # loss
     loss_main = loss_fn(y[action], target_q)
-    loss_l1 = torch.abs(r).mean()
-    lbd_l1 = coef_l1 * loss_main.item() / loss_l1.item()
-    loss = loss_main + lbd_l1 * loss_l1
+    # loss_l1 = torch.abs(r).mean()
+    # lbd_l1 = coef_l1 * loss_main.item() / loss_l1.item()
+    # loss = loss_main + lbd_l1 * loss_l1
+    loss = loss_main
 
     optimizer.zero_grad()
     loss.backward()
